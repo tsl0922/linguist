@@ -15,7 +15,7 @@ module Linguist
     # Returns a FileBlob.
     def initialize(path, base_path = nil)
       @path = path
-      @name = base_path ? path.sub("#{base_path}/", '') : path
+      @name = base_path ? path.force_encoding('ascii-8bit').sub("#{base_path}/", '') : path
     end
 
     # Public: Filename
@@ -43,7 +43,7 @@ module Linguist
     #
     # Returns a String.
     def data
-      File.read(@path)
+      File.read(@path).force_encoding('ascii-8bit')
     end
 
     # Public: Get byte size
