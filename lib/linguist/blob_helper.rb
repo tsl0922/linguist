@@ -4,7 +4,6 @@ require 'linguist/language'
 require 'charlock_holmes'
 require 'escape_utils'
 require 'mime/types'
-require 'pygments'
 require 'yaml'
 
 module Linguist
@@ -188,10 +187,6 @@ module Linguist
     end
 
     # Public: Is the blob safe to colorize?
-    #
-    # We use Pygments for syntax highlighting blobs. Pygments
-    # can be too slow for very large blobs or for certain 
-    # corner-case blobs.
     # 
     # Return true or false
     def safe_to_colorize?
@@ -199,9 +194,6 @@ module Linguist
     end
 
     # Internal: Does the blob have a ratio of long lines?
-    #
-    # These types of files are usually going to make Pygments.rb
-    # angry if we try to colorize them.
     #
     # Return true or false
     def high_ratio_of_long_lines?
@@ -298,7 +290,7 @@ module Linguist
     #
     # Returns a Lexer.
     def lexer
-      language ? language.lexer : Pygments::Lexer.find_by_name('Text only')
+      language ? language.lexer : nil
     end
 
     # Public: Highlight syntax of blob
